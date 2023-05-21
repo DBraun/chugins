@@ -1,6 +1,3 @@
-rm "/usr/local/lib/chuck/Faust.chug"
-rm "/usr/local/lib/chuck/libfaust.2.dylib"
-
 if [ "$(uname)" = "Darwin" ]; then
     if [[ $(uname -m) == 'arm64' ]]; then
         export LIBFAUST_DIR=$PWD/thirdparty/libfaust/darwin-arm64/Release
@@ -45,4 +42,4 @@ cmake --build build --config Release
 cmake --build build --config Release --target install
 
 # mkdir -p "/usr/local/lib/chuck"
-# cp "build/libFaucK.dylib" "/usr/local/lib/chuck/Faust.chug"
+# cp -r "package/fauck-0.0.1/Faust.chug" "/usr/local/lib/chuck/Faust.chug"

@@ -1,5 +1,3 @@
-set CHUCK_DIR=C:/Program Files/ChucK
-
 rem Download libsndfile
 if not exist "thirdparty/libsndfile-1.2.0-win64/" (
     echo "Downloading libsndfile..." 
