@@ -31,7 +31,7 @@ set(ALL_FILES
 file (GLOB DSPLIBS ${LIBFAUST_DIR}/share/faust/*.lib)
 
 # Create shared library
-add_library(FaucK SHARED ${ALL_FILES} ${DSPLIBS})
+add_library(FaucK MODULE ${ALL_FILES} ${DSPLIBS})
 
 ####################################
 # Install - used for packaging
@@ -40,8 +40,8 @@ set (PACKDIR ${ROOT}/package)
 set (DST fauck-${VERSION})
 install ( TARGETS FaucK
     RUNTIME DESTINATION ${PACKDIR}/${DST}
-    # LIBRARY DESTINATION ${PACKDIR}/${DST}
-    # ARCHIVE DESTINATION ${PACKDIR}/${DST}
+    LIBRARY DESTINATION ${PACKDIR}/${DST}
+    ARCHIVE DESTINATION ${PACKDIR}/${DST}
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
@@ -49,6 +49,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 if(APPLE)
 set_target_properties(${PROJECT_NAME} PROPERTIES
+    LINK_FLAGS "-Wl,-U,_object_new_imp -Wl,-U,_object_method_imp"
     BUNDLE TRUE
     BUNDLE_EXTENSION chug
     OUTPUT_NAME Faust
@@ -57,7 +58,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_BUNDLE_NAME ${PROJECT_NAME}
     MACOSX_BUNDLE_BUNDLE_VERSION ${VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${VERSION}
-    # MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist
 )
 else()
 set_target_properties (${PROJECT_NAME} PROPERTIES 
@@ -140,4 +141,10 @@ if (WIN32)
 install (
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/libsndfile-1.2.0-win64/bin/sndfile.dll DESTINATION ${PACKDIR}/${DST}
 )
+endif()
+
+if (APPLE)
+install (
+    CODE "execute_process (COMMAND codesign --sign - --deep --force ${PACKDIR}/${DST}/Faust.chug)" 
+    )
 endif()
