@@ -42,7 +42,7 @@ fi
 
 cmake -Bbuild $CMAKEOPTS -DLIBFAUST_DIR="$LIBFAUST_DIR" -DSndFile_DIR="thirdparty/libsndfile/install"
 cmake --build build --config Release
+cmake --build build --config Release --target install
 
-mkdir -p "/usr/local/lib/chuck"
-cp "build/libFaucK.dylib" "/usr/local/lib/chuck/Faust.chug"
-cp -r $LIBFAUST_DIR/share/faust /usr/local/share/faust
+# mkdir -p "/usr/local/lib/chuck"
+# cp "build/libFaucK.dylib" "/usr/local/lib/chuck/Faust.chug"
