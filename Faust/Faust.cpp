@@ -169,7 +169,7 @@ std::string getPathToFaustLibraries() {
     return p;
 #elif __APPLE__
 	  // look for faustlibraries inside the bundle
-    // OSX only : access to the fautgen~ bundle
+    // OSX only : access to the Faust bundle
     CFBundleRef fauck_bundle = CFBundleGetBundleWithIdentifier(
         CFSTR("edu.stanford.chuck.FaucK"));
     CFURLRef fauck_ref = CFBundleCopyBundleURL(fauck_bundle);
